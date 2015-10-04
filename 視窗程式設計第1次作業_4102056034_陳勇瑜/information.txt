@@ -1,0 +1,8 @@
+<Basic Information>
+company name: denny	 initial assets: 123 	 initial liabilities: 123 
+product name: 1	 product number: 1 	 product price: 1 
+-----------------------------------------
+employee's name: 1	 employee's salary: 1
+-----------------------------------------
+material's name: 1	 material's number: 1 	 material's price: 1 
+-----------------------------------------

@@ -76,11 +76,12 @@ int _tmain(int argc, _TCHAR* argv[])
 		<< "Welcome to Accounting System!" << endl
 		<< "**************************" << endl;
 		FILE* fp;
-		fp = fopen("./information.txt", "w");
+		fp = fopen("../information.txt", "w");
 	while(cont){
 		
 		 //input information  
 		inputInfoCOM((name+i), (init_ast+i), (init_lia+i), fp);
+		printf("initial asset: %ld", *(init_ast + i));
 		cout << "#############" << endl << "<recieve>" << endl; //開始填寫歲入
 		inputInfoPdc((pdt_name + i), (pdt_num + i), (pdt_price + i), fp);
 		cout << "#############" << endl << "<pay>" << endl; //開始填寫歲出
@@ -142,7 +143,7 @@ void inputInfoCOM(char* name, long* init_asset, long* init_liab, FILE* fp)
 	cin >> *init_liab;
 
 	fprintf(fp, "<Basic Information>\n");
-	fprintf(fp, "company name: %s\t initial assets: %lld\t initial liabilities: %lld\n", name, &(*init_asset), &(*init_liab));
+	fprintf(fp, "company name: %s\t initial assets: %ld \t initial liabilities: %ld \n", name, (*init_asset), (*init_liab));
 }
 void inputInfoPdc(char** pdt_name, int** pdt_num, long** pdt_price, FILE* fp)
 {
@@ -160,9 +161,9 @@ void inputInfoPdc(char** pdt_name, int** pdt_num, long** pdt_price, FILE* fp)
 		cout << "----------------" << endl;
 		*tot_pdt += (*((*pdt_price) + i)) * (long)(*((*pdt_num) + i));
 
-		fprintf(fp, "product name: %s\t product number: %d product price: %lld\n", ((*pdt_name) + i), &(*((*pdt_num) + i)), &(*((*pdt_price) + i)));
+		fprintf(fp, "product name: %s\t product number: %ld \t product price: %ld \n", ((*pdt_name) + i), (*((*pdt_num) + i)), (*((*pdt_price) + i)));
 	}
-	fprintf(fp, "-----------------------------------------");
+	fprintf(fp, "-----------------------------------------\n");
 }	
 void inputInfoEmp(char** emp_name, long** sal, FILE* fp)
 {
@@ -178,9 +179,9 @@ void inputInfoEmp(char** emp_name, long** sal, FILE* fp)
 		cin >> *((*sal) + i);
 		cout << "----------------" << endl;
 		*tot_emp += *((*sal) + i);
-		fprintf(fp, "employee's name: %s\t employee's salary: %lld\n", (*emp_name) + i, &(*((*sal) + i)));
+		fprintf(fp, "employee's name: %s\t employee's salary: %ld\n", (*emp_name) + i, (*((*sal) + i)));
 	}
-	fprintf(fp, "-----------------------------------------");
+	fprintf(fp, "-----------------------------------------\n");
 }
 void inputInfoMtl(char** mtl_name, int** mtl_num, long** mtl_price, FILE* fp)
 {
@@ -197,9 +198,10 @@ void inputInfoMtl(char** mtl_name, int** mtl_num, long** mtl_price, FILE* fp)
 		cout << "price: ";
 		cin >> *((*mtl_price)+i);
 		cout << "----------------" << endl;
-		fprintf(fp, "material's name: %s\t material's number: &d\t material's price: %lld\n", (*mtl_name) + i, &(*((*mtl_num) + i)), &(*((*mtl_price) + i)));
+		*tot_mtl += (long)(*((*mtl_num) + i)) * (*((*mtl_price) + i));
+		fprintf(fp, "material's name: %s\t material's number: %ld \t material's price: %ld \n", (*mtl_name) + i, (*((*mtl_num) + i)), (*((*mtl_price) + i)));
 	}
-	fprintf(fp, "-----------------------------------------");
+	fprintf(fp, "-----------------------------------------\n");
 }
 void ledger(int comp_num)
 {
@@ -219,7 +221,7 @@ void billing(char* pdt_name, int* pdt_num, long* pdt_price)
 	cout << "~ 您的購買清單:         ~" << endl;
 	for (int i = 0; i < *countPdt; i++)
 	{
-		cout << "~ " << pdt_name+i << "x" << *(pdt_num+i) << "x" << *(pdt_price+i)<< " ~" << endl;
+		cout << "~ " << pdt_name+i << "\t" << *(pdt_num+i) << "x" << *(pdt_price+i)<< " ~" << endl;
 		cout << "~ " << "\t\t\t" << "total: " << *tot_pdt << " ~" << endl;
 	}
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~" << endl;
