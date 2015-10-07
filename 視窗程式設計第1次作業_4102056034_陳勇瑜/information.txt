@@ -1,8 +1,11 @@
 <Basic Information>
 company name: denny	 initial assets: 123 	 initial liabilities: 123 
-product name: 1	 product number: 1 	 product price: 1 
+product name: iphone	 product number: 2 	 product price: 500 
+product name: ipod	 product number: 2 	 product price: 1000 
 -----------------------------------------
-employee's name: 1	 employee's salary: 1
+employee's name: denny1	 employee's salary: 123
+employee's name: denny2	 employee's salary: 123
 -----------------------------------------
-material's name: 1	 material's number: 1 	 material's price: 1 
+material's name: hello	 material's number: 2 	 material's price: 100 
+material's name: hi	 material's number: 1 	 material's price: 100 
 -----------------------------------------
