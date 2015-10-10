@@ -10,6 +10,7 @@ require: using pointer
 ************************/
 
 #include "stdafx.h"
+#include "stdio.h"
 #include "iostream"
 using std::cout;
 using std::cin;
@@ -32,76 +33,104 @@ using namespace std;
 	long* tot_emp = new long(0);
 	long* tot_mtl = new long(0);
 	
-	int* countPdt = new int;
+	int* countPdt = new int(0);
+	int* countEmp = new int(0);
+	int *countMtl = new int(0);
 
 	//宣告FUNCTION
 	void inputInfoCOM(char* name, long* init_asset, long* init_liab, FILE* fp);
-	void inputInfoPdc(char** pdt_name, int** pdt_num, long** pdt_price, FILE* fp);
-	void inputInfoEmp(char** emp_name, long** sal, FILE* fp);
-	void inputInfoMtl(char** mtl_name, int** mtl_num, long** mtl_price, FILE* fp);
+	void inputInfoPdc(char* pdt_name, int* pdt_num, long* pdt_price, FILE* fp);
+	void inputInfoEmp(char* emp_name, long* sal, FILE* fp);
+	void inputInfoMtl(char* mtl_name, int* mtl_num, long* mtl_price, FILE* fp);
 	void ledger(int* comp_num);
 	void billing(char* pdt_name, int* pdt_num, long* pdt_price);
 
 int _tmain(int argc, _TCHAR* argv[])
 {   
 	//宣告Product相關變數
-		char** pdt_name = new char*[STRMAX];
-		*pdt_name = new char[STRMAX];
-		int** pdt_num = new int*;
-		*pdt_num = new int(0);
-		long** pdt_price = new long*;
-		*pdt_price = new long(0);
-		
-
+		char* pdt_name = new char[STRMAX];
+		int* pdt_num = new int;
+		long* pdt_price = new long;
 	
 	//宣告Employee相關變數
-		char** emp_name = new char*[STRMAX];
-		*emp_name = new char;
-		long** sal = new long*;
-		*sal = new long(0);
+		char* emp_name = new char[STRMAX];
+		long* sal = new long;
 
 	//宣告Material相關變數
-		char** mtl_name = new char*[STRMAX];
-		*mtl_name = new char[STRMAX];
-		int** mtl_num = new int*;
-		*mtl_num = new int(0);
-		long** mtl_price = new long*;
-		*mtl_price = new long(0);
-	
-	
-	bool cont = true;
-	int *i = new int(0);
+		char* mtl_name = new char[STRMAX];
+		int* mtl_num = new int;
+		long* mtl_price = new long;
+
+		bool cont = true;
+		int *j = new int(0);
+		int *comp_num = new int(0);
+		int *i = new int(0); //INDEX
+		char* var = new char[STRMAX]; //用來存不要的資訊
 
 	//start account system
 		cout << "**************************" << endl
 		<< "Welcome to Accounting System!" << endl
 		<< "**************************" << endl;
 		FILE* fp;
-		fp = fopen("../information.txt", "w");
+		
 	while(cont){
+		char* comp = new char[STRMAX];
+		char* str = new char[STRMAX];
+		strcpy(str, "../information");
+		_itoa(*comp_num, comp, 10);
+		strcat(str,comp);
+		strcat(str, ".txt");
+		fp = fopen(str, "w");
 		
-		 //input information  
-		inputInfoCOM((name+*i), (init_ast+*i), (init_lia+*i), fp);//開始填寫公司
+		//exception
+		if (fp == NULL)
+		{
+			fprintf(stderr, "打不開檔案啦!\n");
+			exit(1);
+		}
+
+		//input information  
+		inputInfoCOM(name, init_ast, init_lia, fp);//開始填寫公司
 		cout << "#############" << endl << "<recieve>" << endl; //開始填寫歲入
-		inputInfoPdc((pdt_name + *i), (pdt_num + *i), (pdt_price + *i), fp);
+		inputInfoPdc(pdt_name, pdt_num, pdt_price, fp);
 		cout << "#############" << endl << "<pay>" << endl; //開始填寫歲出
-		inputInfoEmp((emp_name + *i), (sal+*i), fp);//員工
-		inputInfoMtl((mtl_name + *i), (mtl_num + *i), (mtl_price + *i), fp);//耗材料
+		inputInfoEmp(emp_name, sal, fp);//員工
+		inputInfoMtl(mtl_name, mtl_num, mtl_price, fp);//耗材料
+		fclose(fp);
 
-		
+		//讀檔
+		fp = fopen(str, "r");
+		fscanf(fp, "%s%s", var, var);
+		fscanf(fp, "%s%s%s%ld%s%ld", var, name+(*comp_num), var, &(*init_ast), var, &(*init_lia));
+		fscanf(fp, "%d", &(*countPdt));
 
+		for (*i = 0; *i < *countPdt;(*i)++)
+		{
+			fscanf(fp, "%s%s%s%ld%s%ld", var, (pdt_name+(*i)), var, &(*(pdt_num +(*i))), var, &(*(pdt_price+(*i))));
+		}
+		fscanf(fp, "%d", &(*countEmp));
+		cout << *countEmp;
+		for (*i = 0; *i < *countEmp; (*i)++)
+		{	
+			fscanf(fp, "%s%s%s%ld", var, (emp_name+(*i)), var, &(*(sal+(*i))));
+		}
+		fscanf(fp, "%d", &(*countMtl));
+		for (*i = 0; *i < *countMtl; (*i)++)
+		{
+			fscanf(fp, "%s%s%s%ld%s%ld", var, (mtl_name+(*i)), var, &(*(mtl_num+(*i))), var, &(*(mtl_price+(*i))));
+		}
+		fclose(fp);
 		//計算總帳
-		*(asset+*i) = *tot_pdt;
-		*(liab+*i) = *tot_emp + *tot_mtl;
-		*(pro+*i) = *asset - *liab;
-		*(rev+*i) = *pro + *(init_ast+*i) - *(init_lia+*i);
-
+		*(asset + (*comp_num)) = *tot_pdt;
+		*(liab + (*comp_num)) = *tot_emp + *tot_mtl;
+		*(pro + (*comp_num)) = *asset - *liab;
+		*(rev + (*comp_num)) = *pro + *(init_ast)-*(init_lia);
+		
 		//印出發票
-		billing(*(pdt_name +*i), *(pdt_num + *i), *(pdt_price + *i));
+		billing(pdt_name, pdt_num, pdt_price);
 
 		//開始印出目前總帳
-
-		ledger(i);
+		ledger(comp_num);
 
 		//判斷是否輸入下一間公司
 		cout << "是否要繼續?[1/0]: ";
@@ -111,20 +140,17 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		if (*(ConOrNot)){
 			cont = true;
-			*i ++;
+			(*comp_num)++;
 		}
 		else{
 			cont = false;
 		}
-	}	
+		
 
-	//exception
-	if (fp == NULL)
-	{
-		fprintf(stderr, "打不開檔案啦!\n");
-		exit(1);
-	}
-	fclose(fp);
+	}	
+		
+
+	
 	
 	return 0;
 }
@@ -143,76 +169,73 @@ void inputInfoCOM(char* name, long* init_asset, long* init_liab, FILE* fp)
 	cin >> *init_liab;
 
 	fprintf(fp, "<Basic Information>\n");
-	fprintf(fp, "company name: %s\t initial assets: %ld \t initial liabilities: %ld \n", name, (*init_asset), (*init_liab));
+	fprintf(fp, "company_name: %s\t initial_assets: %ld\t initial_liabilities: %ld\n", name, (*init_asset), (*init_liab));
 }
-void inputInfoPdc(char** pdt_name, int** pdt_num, long** pdt_price, FILE* fp)
+void inputInfoPdc(char* pdt_name, int* pdt_num, long* pdt_price, FILE* fp)
 {   //新增產品
-	cout << "How many items?: " << endl;
+	cout << "How many items?: ";
 	cin >> *countPdt;
+	fprintf(fp, "%d\n", *countPdt);
 	int* j = new int(0);
-	while (*j<*countPdt)
+	while ((*j) < (*countPdt))
 	{
 		fflush(stdin);
 		cout << "product name: ";
-		cin.getline( ((*pdt_name)+ *j), STRMAX);
+		cin.getline((pdt_name + *j), STRMAX);
 		cout << "product number: ";
-		cin >> *((*pdt_num)+ *j) ;
+		cin >> *(pdt_num + *j);
 		cout << "product price: ";
-		cin >> *((*pdt_price) + *j);
+		cin >> *(pdt_price + *j);
 		cout << "----------------" << endl;
-		*tot_pdt += (*((*pdt_price) + *j)) * (long)(*((*pdt_num) + *j));
-
-		fprintf(fp, "product name: %s\t product number: %ld \t product price: %ld \n", ((*pdt_name) + *j), (*((*pdt_num) + *j)), (*((*pdt_price) + *j)));
+		*tot_pdt += (*(pdt_price + *j)) * (long)(*(pdt_num + *j));
+		fprintf(fp, "product_name: %s\t product_number: %ld\t product_price: %ld\n",(pdt_name + *j), (*(pdt_num + *j)), (*(pdt_price + *j)));
 		(*j)++;
 	}
-
-	fprintf(fp, "-----------------------------------------\n");
 	delete j;
 }	
-void inputInfoEmp(char** emp_name, long** sal, FILE* fp)
+void inputInfoEmp(char* emp_name, long* sal, FILE* fp)
 {	//新增EMPlOYEE
-	int* count=new int(0);
 	int* j = new int(0);
 	cout << "How many employees?: ";
-	cin >> *count;
-
-	for (*j = 0; *j < *count; (*j)++)
+	cin >> *countEmp;
+	fprintf(fp, "%d\n", *countEmp);
+	for (*j = 0; *j < *countEmp; (*j)++)
 	{
 		fflush(stdin);
 		cout << "employee's name: ";
-		cin.getline((*emp_name)+*j, STRMAX);
+		cin.getline((emp_name)+*j, STRMAX);
 		cout << "employee's salary: ";
-		cin >> *((*sal) + *j);
+		cin >> *(sal + *j);
 		cout << "----------------" << endl;
-		*tot_emp += *((*sal) + *j);
-		fprintf(fp, "employee's name: %s\t employee's salary: %ld\n", (*emp_name) + *j, (*((*sal) + *j)));
+		*tot_emp += *(sal + *j);
+		fprintf(fp, "employee's_name: %s\t employee's_salary: %ld\n",(emp_name)+*j, (*(sal + *j)));
 	}
-	fprintf(fp, "-----------------------------------------\n");
 	delete j;
 }
-void inputInfoMtl(char** mtl_name, int** mtl_num, long** mtl_price, FILE* fp)
+void inputInfoMtl(char* mtl_name, int* mtl_num, long* mtl_price, FILE* fp)
 {	//新增MATERIAL
-	int *count = new int(0);
 	int* j = new int(0);
+
 	cout << "How many materials?: ";
-	cin >> *count;
-	for (*j=0 ; *j< *count; (*j)++)
+	cin >> *countMtl;
+	fprintf(fp, "%d\n", *countMtl);
+	for (*j=0 ; *j< *countMtl; (*j)++)
 	{
 		fflush(stdin);
 		cout << "material's name: ";
-		cin.getline((*mtl_name)+ *j, STRMAX);
+		cin.getline( (mtl_name)+*j, STRMAX);
 		cout << "number: ";
-		cin >> *((*mtl_num)+ *j);
+		cin >> *(mtl_num + *j);
 		cout << "price: ";
-		cin >> *((*mtl_price)+ *j);
+		cin >> *(mtl_price + *j);
 		cout << "----------------" << endl;
-		*tot_mtl += (long)(*((*mtl_num) + *j)) * (*((*mtl_price) + *j));
-		fprintf(fp, "material's name: %s\t material's number: %ld \t material's price: %ld \n", (*mtl_name) + *j, (*((*mtl_num) + *j)), (*((*mtl_price) + *j)));
+		*tot_mtl += (long)(*(mtl_num + *j)) * (*(mtl_price + *j));
+		
+		fprintf(fp, "material's_name: %s\t material's_number: %ld\t material's_price: %ld\n", mtl_name + *j, (*(mtl_num + *j)), (*(mtl_price + *j)));
 	}
-	fprintf(fp, "-----------------------------------------\n");
 	delete j;
 }
-void ledger(int *comp_num)
+void ledger(int* comp_num)
 {
 	int *j = new int(0);
 	cout << "+++++++++++++++++" << endl
@@ -229,12 +252,12 @@ void billing(char* pdt_name, int* pdt_num, long* pdt_price)
 {
 	int *j = new int(0);
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "~ 親愛的客人 這是您的帳單 ~" << endl;
-	cout << "~ 您的購買清單:         ~" << endl;
+		<< "~ 親愛的客人 這是您的帳單 " << endl;
+	cout << "~ 您的購買清單:         " << endl;
 	for (*j=0; *j < *countPdt; (*j)++)
 	{
-		cout << "~ " << pdt_name+*j << "\t" << *(pdt_num+*j) << "x" << *(pdt_price+*j)<< " ~" << endl;
-		cout << "~ " << "\t\t\t" << "total: " << *tot_pdt << " ~" << endl;
+		cout << "~ " << (pdt_name)+*j << "\t" << *(pdt_num+*j) << "x" << *(pdt_price+*j)<< " ~" << endl;
 	}
+	cout << "~ " << "\t\t\t" << "total: " << *tot_pdt << " ~" << endl;
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 }

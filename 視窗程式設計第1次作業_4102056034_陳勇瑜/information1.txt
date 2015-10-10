@@ -1,0 +1,8 @@
+<Basic Information>
+company_name: Boss	 initial_assets: 111	 initial_liabilities: 111
+1
+product_name: 1	 product_number: 1	 product_price: 1
+1
+employee's_name: 1	 employee's_salary: 1
+1
+material's_name: 1	 material's_number: 1	 material's_price: 1

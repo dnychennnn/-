@@ -1,11 +1,9 @@
 <Basic Information>
-company name: denny	 initial assets: 123 	 initial liabilities: 123 
-product name: iphone	 product number: 2 	 product price: 500 
-product name: ipod	 product number: 2 	 product price: 1000 
------------------------------------------
-employee's name: denny1	 employee's salary: 123
-employee's name: denny2	 employee's salary: 123
------------------------------------------
-material's name: hello	 material's number: 2 	 material's price: 100 
-material's name: hi	 material's number: 1 	 material's price: 100 
------------------------------------------
+company_name: denny	 initial_assets: 123	 initial_liabilities: 123
+2
+product_name: ihpome	 product_number: 2	 product_price: 199
+product_name: ipod	 product_number: 1	 product_price: 100
+1
+employee's_name: asdf	 employee's_salary: 100
+1
+material's_name: rock	 material's_number: 2	 material's_price: 100
