@@ -1,0 +1,12 @@
+<Basic Information>
+company_name:asdf	initial_asset:123	initial_liabilities:123
+Item_number: 2
+product_name:qwer	product_number:123	product_price:22	Date:2001/1/1
+product_name:asdf	product_number:321	product_price:1	Date:2002/2/2
+total:3027
+Employee_number: 1
+Employee's_name:1	Employee's_salary:1	Date:2001/1/1
+total:1
+Item_number: 1
+Material's_name:1	Material's_number:1	Material's_pricee:1	Date:2001/1/1
+total:1
