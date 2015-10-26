@@ -1,11 +1,14 @@
-﻿已經開始建置於 2015/10/25 下午7:41:29。
+﻿已經開始建置於 2015/10/26 下午4:55:09。
      1>節點 2 (Build 目標) 上的專案 "\\psf\Home\Documents\Visual Studio 2013\Projects\Class_Window_Programming\視窗程式設計第3次作業_4102056034_陳勇瑜\視窗程式設計第3次作業_4102056034_陳勇瑜\視窗程式設計第3次作業_4102056034_陳勇瑜.vcxproj"。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\視窗程式設計第3次作業_4102056034_陳勇瑜.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "視窗程式設計第3次作業_4102056034_陳勇瑜.cpp"
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\視窗程式設計第3次作業_4102056034_陳勇瑜.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "視窗程式設計第3次作業_4102056034_陳勇瑜.cpp"
          視窗程式設計第3次作業_4102056034_陳勇瑜.cpp
-     1>\\psf\home\documents\visual studio 2013\projects\class_window_programming\視窗程式設計第3次作業_4102056034_陳勇瑜\視窗程式設計第3次作業_4102056034_陳勇瑜\視窗程式設計第3次作業_4102056034_陳勇瑜.cpp(17): fatal error C1083: 無法開啟包含檔案: 'filestream': No such file or directory
-     1>專案 "\\psf\Home\Documents\Visual Studio 2013\Projects\Class_Window_Programming\視窗程式設計第3次作業_4102056034_陳勇瑜\視窗程式設計第3次作業_4102056034_陳勇瑜\視窗程式設計第3次作業_4102056034_陳勇瑜.vcxproj" (Build 目標) 建置完成 -- 失敗。
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\psf\Home\Documents\Visual Studio 2013\Projects\Class_Window_Programming\視窗程式設計第3次作業_4102056034_陳勇瑜\Debug\視窗程式設計第3次作業_4102056034_陳勇瑜.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"\\psf\Home\Documents\Visual Studio 2013\Projects\Class_Window_Programming\視窗程式設計第3次作業_4102056034_陳勇瑜\Debug\視窗程式設計第3次作業_4102056034_陳勇瑜.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\psf\Home\Documents\Visual Studio 2013\Projects\Class_Window_Programming\視窗程式設計第3次作業_4102056034_陳勇瑜\Debug\視窗程式設計第3次作業_4102056034_陳勇瑜.lib" /MACHINE:X86 Debug\stdafx.obj
+         "Debug\視窗程式設計第3次作業_4102056034_陳勇瑜.obj"
+         視窗程式設計第3次作業_4102056034_陳勇瑜.vcxproj -> \\psf\Home\Documents\Visual Studio 2013\Projects\Class_Window_Programming\視窗程式設計第3次作業_4102056034_陳勇瑜\Debug\視窗程式設計第3次作業_4102056034_陳勇瑜.exe
+     1>專案 "\\psf\Home\Documents\Visual Studio 2013\Projects\Class_Window_Programming\視窗程式設計第3次作業_4102056034_陳勇瑜\視窗程式設計第3次作業_4102056034_陳勇瑜\視窗程式設計第3次作業_4102056034_陳勇瑜.vcxproj" (Build 目標) 建置完成。
 
-建置失敗。
+建置成功。
 
-經過時間 00:00:01.27
+經過時間 00:00:00.89
