@@ -24,19 +24,372 @@ using namespace std;
 #define STRMAX 30
 #define ARRAY_SIZE(array) (sizeof((array))/sizeof((*array)))
 
+
+
+
+
+class CInformation{
+public:
+
+	void swapStr(char* str1, char* str2){
+		char* temp = str1;
+		str1 = str2;
+		str2 = temp;
+		delete temp;
+	}
+	void swapStr2(char** str1, char** str2){
+		char** temp = str1;
+		str1 = str2;
+		str2 = temp;
+		delete temp;
+	}
+	void swapLong(long* long1, long* long2){
+		long temp = *long1;
+		*long1 = *long2;
+		*long2 = temp;
+	}
+	void swapLong2(long** long1, long** long2){
+		long* temp = *long1;
+		*long1 = *long2;
+		*long2 = temp;
+	}
+	
+	void sortBilling(int cust_num, char* cust_name, char** order_name, long** order_num){
+		int choice = 0;
+		cout << "1 依照名字" << endl << "2 依照購買數量" << endl;
+		cout << "請問您想怎麼排列您的發票?: ";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			//sorted by order name
+			for (int k = 0; k <= cust_num; k++){
+				for (int i = 0; i < ARRAY_SIZE(*order_name); i++){
+					for (int j = i + 1; j < ARRAY_SIZE(*order_name); j++){
+						if (strcmp((*(order_name + k) + i), (*(order_name + k) + j))){
+							swapStr((*(order_name + k) + i), *(order_name + k) + j);
+							swapLong(*(order_num + k) + i, *(order_num + k) + j);
+						}
+					}
+				}
+			}
+			break;
+		case 2:
+			//sorted by order number
+			for (int k = 0; k <= cust_num; k++){
+				for (int i = 0; i < ARRAY_SIZE(*order_name); i++){
+					for (int j = i + 1; j < ARRAY_SIZE(*order_name); j++){
+						if ((*(order_num + k) + i) >(*(order_num + k) + j)){
+							swapStr((*(order_name + k) + i), *(order_name + k) + j);
+							swapLong(*(order_num + k) + i, *(order_num + k) + j);
+						}
+					}
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	void sortPdt(char* pdt_name, long* pdt_num){
+		int choice = 0;
+		cout << "1 依照名字" << endl << "2 依照總資產" << endl;
+		cout << "請問您想怎麼排列您的庫存(產品)?: ";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			//sorted by product name
+			for (int i = 0; i < ARRAY_SIZE(pdt_name); i++){
+				for (int j = i + 1; j < ARRAY_SIZE(pdt_name); j++){
+					if (strcmp(pdt_name + i, pdt_name + j)){
+						swapStr(pdt_name + i, pdt_name + j);
+						swapLong(pdt_num + i, pdt_num + j);
+					}
+				}
+			}
+			break;
+		case 2:
+			//sorted by product number
+			for (int i = 0; i < ARRAY_SIZE(pdt_name); i++){
+				for (int j = i + 1; j < ARRAY_SIZE(pdt_name); j++){
+					if (*(pdt_num + i) > *(pdt_num + j)){
+						swapStr(pdt_name + i, pdt_name + j);
+						swapLong(pdt_num + i, pdt_num + j);
+					}
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	void sortMtl(char* mtl_name, long* mtl_num){
+		int choice = 0;
+		cout << "1 依照名字" << endl << "2 依照總資產" << endl;
+		cout << "請問您想怎麼排列您的庫存(材料)?: ";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			//sorted by product name
+			for (int i = 0; i < ARRAY_SIZE(mtl_name); i++){
+				for (int j = i + 1; j < ARRAY_SIZE(mtl_name); j++){
+					if (strcmp(mtl_name + i, mtl_name + j)){
+						swapStr(mtl_name + i, mtl_name + j);
+						swapLong((mtl_num + i), (mtl_num + j));
+					}
+				}
+			}
+			break;
+		case 2:
+			//sorted by product number
+			for (int i = 0; i < ARRAY_SIZE(mtl_name); i++){
+				for (int j = i + 1; j < ARRAY_SIZE(mtl_name); j++){
+					if (*(mtl_num + i) > *(mtl_num + j)){
+						swapStr(mtl_name + i, mtl_name + j);
+						swapLong((mtl_num + i), (mtl_num + j));
+					}
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	void sortShowcust(char* cust_name, int cust_num, char* location){
+		int choice = 0;
+		cout << "1 依照客戶名" << endl << "2 客戶地址" << endl;
+		cout << "請問您想怎麼排列訂單?: ";
+		cin >> choice;
+		switch (choice){
+		case1:
+			//sorted by customer's name
+			for (int i = 0; i < cust_num; i++){
+				for (int j = i + 1; j < cust_num; j++){
+					if (strcmp(cust_name + i, cust_name + j)){
+						swapStr(cust_name + i, cust_name + j);
+						swapStr(location + i, (location + j));
+					}
+				}
+			}
+			break;
+		case 2:
+			//sorted by location
+			for (int i = 0; i < cust_num; i++){
+				for (int j = i + 1; j < cust_num; j++){
+					if (strcmp(location + i, location + j)){
+						swapStr(cust_name + i, cust_name + j);
+						swapStr(location + i, (location + j));
+					}
+				}
+			}
+			break;
+		default:
+			break;
+		}
+
+
+
+	}
+	void sortShowemp(int countEmp, char* emp_name, long* emp_sal, char* emp_date){
+		int choice = 0;
+		cout << "1 依照員工名字" << endl << "2 依照員工薪水" << endl;
+		cout << "請問您想怎麼排列您的庫存(產品)?: ";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			//sorted by employee's name
+			for (int i = 0; i < countEmp; i++){
+				for (int j = i + 1; j < countEmp; j++){
+					if (strcmp(emp_name + i, emp_name + j)){
+						swapStr(emp_name + i, emp_name + j);
+						swapLong(emp_sal + i, emp_sal + j);
+					}
+				}
+			}
+			break;
+		case 2:
+			//sorted by employee's salary
+			for (int i = 0; i < countEmp; i++){
+				for (int j = i + 1; j < countEmp; j++){
+					if (emp_sal + i > emp_sal + j){
+						swapStr(emp_name + i, emp_name + j);
+						swapLong(emp_sal + i, emp_sal + j);
+					}
+				}
+			}
+			break;
+		case 3:
+			//sorted by emplyee's date
+			for (int i = 0; i < countEmp; i++){
+				for (int j = i + 1; j < countEmp; j++){
+					if (strcmp(emp_date + i, emp_date + j)){
+						swapStr(emp_name + i, emp_name + j);
+						swapLong(emp_sal + i, emp_sal + j);
+						swapStr(emp_date + i, emp_date + j);
+					}
+				}
+			}
+		default:
+			break;
+		}
+	}
+	void sortShoworder(int cust_num, int countOrder, char* cust_name, char** order_name, long** order_num){
+		int choice = 0;
+		cout << "1 依照客戶名" << endl << "2 依照產品名" << endl << "3 依照產品數量";
+		cout << "請問您想怎麼排列訂單?: ";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			//sorted by customer's name
+			for (int i = 0; i < cust_num; i++){
+				for (int j = i + 1; j < cust_num; j++){
+					if (strcmp(cust_name + i, cust_name + j)){
+						swapStr(cust_name + i, cust_name + j);
+						swapLong2((order_num + i), (order_num + j));
+					}
+				}
+			}
+			break;
+		case 2:
+			//sorted by order's name
+			for (int k = 0; k <= cust_num; k++){
+				for (int i = 0; i < ARRAY_SIZE(*order_name); i++){
+					for (int j = i + 1; j < ARRAY_SIZE(*order_name); j++){
+						if (strcmp((*(order_name + k) + i), (*(order_name + k) + j))){
+							swapStr((*(order_name + k) + i), *(order_name + k) + j);
+							swapLong(*(order_num + k) + i, *(order_num + k) + j);
+						}
+					}
+				}
+			}
+			break;
+		case 3:
+			//sorted by order's name
+			for (int k = 0; k <= cust_num; k++){
+				for (int i = 0; i < ARRAY_SIZE(*order_name); i++){
+					for (int j = i + 1; j < ARRAY_SIZE(*order_name); j++){
+						if (*(*(order_name + k) + i) > *(*(order_name + k) + j)){
+							swapStr((*(order_name + k) + i), *(order_name + k) + j);
+							swapLong(*(order_num + k) + i, *(order_num + k) + j);
+						}
+					}
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	}	
+	void billing(int cust_num, char* cust_name, char** order_name, long** order_num, long order_totoal, int countOrder){
+		sortBilling(cust_num, cust_name, order_name, order_num);
+		cout << "+++++++++++++++++++++++++++++++" << endl;
+		for (int j = 0; j <= cust_num; j++){
+			cout << "    HELLO " << cust_name + j << ", This is your receipt!" << endl << endl;
+			for (int i = 0; i < countOrder; i++){
+				cout << *(order_name + j) + i << "\t" << "X " << *(*(order_num + j) + i) << endl;
+			}
+			cout << "-------------------------------" << endl;
+			cout << "Total: " << order_totoal << endl;
+			cout << "+++++++++++++++++++++++++++++++" << endl;
+		}
+
+	}
+	void inventory(int countPdt, char* pdt_name, long* pdt_num, char** pdt_need, int countOrder, char** order_name, long** order_num, int countMtl, char* mtl_name, long* mtl_num){
+
+		//每次input order就call一次 計算剩餘pdt
+		//每次input order就call一次 計算剩餘mtl
+		for (int i = 0; i < countOrder; i++){
+			for (int j = 0; j < countPdt; j++){
+				if (strcmp(((*order_name) + i), pdt_name + j)){
+					*(pdt_num + j) -= *(*order_num + i);
+					for (int k = 0; k < ARRAY_SIZE(*(pdt_need + j)); k++){
+						for (int l = 0; l < countMtl; l++){
+							*(mtl_num + l) -= 1;
+						}
+					}
+				}
+			}
+		}
+	}
+	void showInventory(int countPdt, char* pdt_name, long* pdt_num, int countMtl, char* mtl_name, long* mtl_num){
+		sortPdt(pdt_name, pdt_num);
+		//印出Inventory
+		cout << "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" << endl;
+		cout << "                PRODUCT                    " << endl;
+		cout << "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" << endl;
+
+		//印出庫存product
+		for (int i = 0; i < countPdt; i++){
+			cout << pdt_name + i << "\t" << *(pdt_num + i) << endl;
+		}
+		sortMtl(mtl_name, mtl_num);
+		cout << "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" << endl;
+		cout << "                Materials                    " << endl;
+		cout << "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" << endl;
+
+		for (int i = 0; i < countMtl; i++){
+			cout << mtl_name + i << "\t" << *(mtl_num + i) << endl;
+		}
+		//計算剩餘的原料可做多少product
+	}
+};
+class Corder{
+public:
+	int countOrder;
+	char* cust_name = new char[STRMAX];
+	int cust_num;
+	char* location = new char[STRMAX];
+	char** order_name = new char*[STRMAX];
+	long** order_num = new long*(0);
+	long** order_price = new long*(0);
+	long order_total;
+	char* expectedDate = new char[STRMAX];
+	bool cont_order = true;
+	CInformation info = CInformation();
+
+	void showOrder(int cust_num, int countOrder, char* cust_name, char** order_name, long** order_num){
+		info.sortShoworder(cust_num, countOrder, cust_name, order_name, order_num);
+		cout << "=====================================" << endl;
+		cout << "=             ORDER                 =" << endl;
+		cout << "=====================================" << endl;
+		for (int i = 0; i <= cust_num; i++){
+			cout << cust_name + i << "\t" << expectedDate + i << endl;
+			for (int j = 0; j < ARRAY_SIZE(*(order_name + cust_num)); j++){
+				cout << (*(order_name + i) + j) << "\t" << (*(order_num + i) + j) << endl;
+			}
+		}
+		cout << "=====================================" << endl;
+	}
+	void showCustomer(char* cust_name, int cust_num, char* location){
+		info.sortShowcust(cust_name, cust_num, location);
+		cout << "=====================================" << endl;
+		cout << "=             Customer              =" << endl;
+		cout << "=====================================" << endl;
+		for (int i = 0; i <= cust_num; i++){
+			cout << cust_name + i << "\t" << location + i << endl;
+		}
+		cout << "=====================================" << endl;
+	}
+
+};
+
 class Ccompany{
 public:
 	//basic info
 	char* name = new char[STRMAX];
-	long* init_ast = new long;
-	long* init_lia = new long;
+	long init_ast = 0;
+	long init_lia = 0;
 	char* date = new char[STRMAX];
 
 	//products
 	int countPdt;
 	char* pdt_name = new char[STRMAX];
-	long* pdt_num = new long;
-	long* pdt_price = new long;
+	long* pdt_num = new long(0);
+	long* pdt_price = new long(0);
 	char** pdt_need = new char*[STRMAX];
 	char* pdt_date = new char[STRMAX];
 	long pdt_total = 0;
@@ -45,9 +398,8 @@ public:
 	int countEmp;
 	char* emp_name = new char[STRMAX];
 	char* emp_date = new char[STRMAX];
-	long* emp_num = new long;
-	long* emp_sal = new long;
-	long emp_total = 0;
+	long* emp_sal = new long(0);
+	long emp_total =0;
 
 	//material
 	int countMtl;
@@ -57,18 +409,22 @@ public:
 	long* mtl_price = new long(0);
 	long mtl_total = 0;
 
-	
+	//Order
+	Corder order = Corder();
+
+	//function
+	CInformation info = CInformation();
 
 	void inputCompInfo(){
 		cout << "Add a company" << endl;
 		cout << "<Basic Information>" << endl;
 		cout << "company name: ";
-		cin.getline(name, STRMAX);
+		cin.getline(name  , STRMAX);
 		cout << "initial assets: ";
-		cin >> *init_ast;
+		cin >> init_ast;
 		cout << "initial liabilities: ";
-		cin >> *init_lia;
-	};
+		cin >> init_lia;
+	}
 	void inputPdtInfo(){
 		cout << "How many items?: ";
 		cin >> countPdt;
@@ -76,8 +432,8 @@ public:
 		int i = 0;
 		bool cont = false;
 		while (j < countPdt)
-
 		{
+			fflush(stdin);
 			cout << "product name: ";
 			cin.getline((pdt_name + j), STRMAX);
 			cout << "product number: ";
@@ -87,35 +443,36 @@ public:
 			//定義每項產品所需要的原料
 			while (cont){
 				cout << "此產品所需要的材料: " << endl;
-				cin >> (*(pdt_need+j) + i);
-				cout << "還要繼續輸入材料?(true/false): " << endl;
+				cin >> (*(pdt_need + j) + i);
+				cout << "還要繼續輸入材料?(1/0): " << endl;
 				cin >> cont;
 				if (cont){
 					i++;
 				}
 			}
-			cin >> "date(ie: 2015/12/26): ";
-			cout << pdt_date+j << endl;
+			cout << "date(ie: 2015/12/26): ";
+			cin >> pdt_date + j ;
 			pdt_total += (*(pdt_price + j)) * (long)(*(pdt_num + j));
 			j++;
-			
+
 		}
 
-		
+
 		cout << "----------------" << endl;
-		
+
 	}
 	void inputEmpInfo(){
 		cout << "How many employees?: ";
 		cin >> countEmp;
 		for (int j = 0; j < countEmp; j++)
 		{
+			fflush(stdin);
 			cout << "employee's name: ";
 			cin.getline((emp_name)+j, STRMAX);
 			cout << "employee's salary: ";
 			cin >> *(emp_sal + j);
-			cin >> "date(ie: 2015/12/26): ";
-			cout << emp_date + j << endl;
+			cout << "date(ie: 2015/12/26): ";
+			cin >> emp_date + j ;
 			cout << "----------------" << endl;
 			emp_total += *(emp_sal + j);
 		}
@@ -125,6 +482,7 @@ public:
 		cin >> countMtl;
 		for (int j = 0; j < countMtl; j++)
 		{
+			fflush(stdin);
 			cout << "material's name: ";
 			cin.getline((mtl_name)+j, STRMAX);
 			cout << "number: ";
@@ -138,166 +496,462 @@ public:
 
 		}
 	}
-	
-};
-
-class Corder{
-	
-	int countOrder;
-	char* cust_name = new char[STRMAX];
-	int cust_num;
-	char* location = new char[STRMAX];
-	char** order_name = new char*[STRMAX];
-	long** order_num = new long*(0);
-	long* order_price = new long(0);
-	long order_total;
-	char* expectedDate = new char[STRMAX];
-	bool cont_order = true;
-
 	void inputOrderInfo(){
 
-		while (cont_order){
+		while (order.cont_order){
+			fflush(stdin);
 			cout << "customer's name: ";
-			cin.getline(cust_name+cust_num, STRMAX);
+			cin.getline(order.cust_name + order.cust_num, STRMAX);
 			cout << "location(ie: 402台中市南區國光路250號): ";
-			cin >> location;
+			cin >> order.location;
+			cout << "expected date(ie: 2015/12/26): " << endl;
+			cin >> (order.expectedDate + order.cust_num);
 			cout << "How many orders?: ";
-			cin >> countOrder;
-			for (int j = 0; j < countOrder; j++)
+			cin >> order.countOrder;
+			for (int j = 0; j < order.countOrder; j++)
 			{
 				cout << "product name: " << endl;
-				cin >> *(order_name+cust_num) + j;
+				cin >> *(order.order_name + order.cust_num) + j;
 				cout << "product number: " << endl;
-				cin >> *(*(order_num+cust_num) + j);
+				cin >> *(*(order.order_num + order.cust_num) + j);
 				cout << "product price: " << endl;
-				cin >> *(order_price + j);
-				cout << "expected date(ie: 2015/12/26): " << endl;
-				cin >> expectedDate + j;
+				cin >> *(*(order.order_price + order.cust_num) + j);
 				cout << "----------------" << endl;
-				order_total = *(*(order_num+cust_num) + j)**(order_price + j);
+				order.order_total = *(*(order.order_num + order.cust_num) + j)**(*(order.order_num + order.cust_num) + j);
+				info.inventory(countPdt, pdt_name, pdt_num, pdt_need, order.countOrder, order.order_name, order.order_num, countMtl, mtl_name, mtl_num);
+				info.billing(order.cust_num, order.cust_name, order.order_name, order.order_num, order.order_total, order.countOrder);
 			}
-			cout << "是否繼續輸入訂單?(true/false): ";
-			cin >> cont_order;
-			if (cont_order){
-				cust_num++;
+			cout << "是否繼續輸入訂單?(1/0): ";
+			cin >> order.cont_order;
+			if (order.cont_order){
+				order.cust_num++;
 			}
-
+			order.showOrder(order.cust_num, order.countOrder, order.cust_name, order.order_name, order.order_num);
 		}
-		showOrder(cust_num ,countOrder, cust_name, order_name, order_num);
-		
 	}
-	void showOrder(int cust_num,int countOrder, char* cust_name, char** order_name, long** order_num){
+	void showEmployee(int countEmp, char* emp_name, long* emp_sal, char* emp_date){
+		CInformation func;
+		func.sortShowemp(countEmp, emp_name, emp_sal, emp_date);
 		cout << "=====================================" << endl;
-		cout << "=             ORDER                 =" << endl;
+		cout << "=             Employee              =" << endl;
 		cout << "=====================================" << endl;
-		for (int i = 0; i < cust_num; i++){
-			cout << cust_name + cust_num << endl;
-			for (int j = 0; j < ARRAY_SIZE(*(order_name + cust_num)); j++){
-				cout << (*(order_name + cust_num) + j) << "\t" << (*(order_num + cust_num) + j) << endl;
-			}
+		for (int i = 0; i < countEmp; i++){
+			cout << emp_name + i << "\t" << *(emp_sal + i) << "\t" << emp_date + i << endl;
 		}
 		cout << "=====================================" << endl;
+
 	}
 };
 
-	
-
-
-
-	class CInformation{
-	
-		void swapStr(char* str1, char* str2){
-			char* temp = str1;
-			str1 = str2;
-			str2 = temp;
-			delete temp;
-		}
-		void swapLong(long* long1, long* long2){
-			long* temp = long1;
-			long1 = long2;
-			long2 = temp;
-			delete temp;
-		}
-		void sortStr(char* STR){
-			for (int i = 0; i < ARRAY_SIZE(STR); i++){
-				for (int j = i + 1; j < ARRAY_SIZE(STR); j++){
-					if (strcmp(STR + i, STR + j)){
-						swapStr(STR + i, STR + j);
-					}
-				}
-			}
-		}
-		void sortLong(long* LONG){
-			for (int i = 0; i < ARRAY_SIZE(LONG); i++){
-				for (int j = i + 1; j < ARRAY_SIZE(LONG); j++){
-					if (*(LONG + i) > *(LONG + j)){
-						swapLong(LONG + i, LONG + j);
-					}
-				}
-			}
-		}
-		void ledger(long* init_ast, long* init_lia, char* name, long* pdt_total, long* emp_total, long* mtl_total){
-			cout << "===============================" << endl;
-			cout << "name" << "\t" << "ASSET" << "\t" << "LIABILITY" << "\t" << "REVENUE" << "\t" << "EXPENSE" << endl;
-			for (int i = 0; i < ARRAY_SIZE(name); i++){
-				cout << name + i << "\t" << *(init_ast + i) + *(pdt_total + i) << "\t" << *(init_lia + i) + *(emp_total + i) + *(mtl_total + i) << "\t" << *(pdt_total + i) << "\t" << *(emp_total + i) + *(mtl_total + i);
-			}
-			cout << "===============================" << endl;
-		}
-		void billing(char* cust_name, long* order_name, long* order_num, long order_totoal, int countOrder){
-			cout << "+++++++++++++++++++++++++++++++" << endl;
-			cout << "    HELLO " << cust_name << ", This is your receipt!" << endl <<endl;
-			for (int i = 0; i < countOrder; i++){
-				cout << order_name + i << "\t" << "X " << *(order_num + i)<<endl;
-			}
-			cout << "-------------------------------" << endl;
-			cout << "Total: " << order_totoal;
-		}
-		void inventory(int countPdt, char* pdt_name, long* pdt_num, char** pdt_need, int countOrder,char* order_pdt, long* order_num, int countMtl, char* mtl_name, long* mtl_num){
-			
-			//每次input order就call一次 計算剩餘pdt
-			//每次input order就call一次 計算剩餘mtl
-			for (int i=0;i<countOrder;i++){
-				for (int j = 0; j < countPdt; j++){
-					if (strcmp(order_pdt + i, pdt_name + j)){
-						*(pdt_num + j) -= *(order_num + i);
-						for (int k = 0; k < ARRAY_SIZE(*(pdt_need + j)); k++){
-							for (int l = 0; l < countMtl; l++){
-								*(mtl_num + l) -= 1;
-							}
-						}
-					}					
-				}					
-			}
-			
-			//印出Inventory
-			cout << "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" << endl;
-			cout << "                PRODUCT                    " << endl;
-			//印出庫存product
-			for (int i = 0; i < countPdt; i++){
-				cout << pdt_name + i << "\t" << *(pdt_num + i)<<endl;
-			}
-			cout << endl << "                Materials                    " << endl;
-			for (int i = 0; i < countMtl; i++){
-				cout << mtl_name + i << "\t" << *(mtl_num + i) << endl;
-			}
-
-			//計算剩餘的原料可做多少product
-
-			
-		}
-		
-
-
-	};
-
-
-
-
-	int _tmain(int argc, _TCHAR* argv[])
-	{
-		return 0;
+class Cledger{
+public:
+	void swapCcompany(Ccompany comp1, Ccompany comp2){
+		Ccompany temp = Ccompany();
+		temp = comp1;
+		comp1 = comp2;
+		comp2 = temp;
 	}
+	void sortLedger(Ccompany comp[STRMAX], int count){
+		int choice = 0;
+		cout << "1 依照名字" << endl << "2 依照總資產" << endl << "3 依照總負債" << endl;
+		cout << "請問您想怎麼排列您的總帳?: ";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			//sorted by name
+			for (int i = 0; i <= count; i++){
+				for (int j = i + 1; j < count; j++){
+					if (strcmp(comp[i].name, comp[j].name)){
+						swapCcompany(comp[i], comp[j]);
+					}
+				}
+			}
+		case 2:
+			//sorted by initial asset
+			for (int i = 0; i < count; i++){
+				for (int j = i + 1; j < count; j++){
+					if (comp[i].init_ast > comp[j].init_ast){
+						swapCcompany(comp[i], comp[j]);
+					}
+				}
+			}
+		case 3:
+			//sorted by initial liability
+			for (int i = 0; i < count; i++){
+				for (int j = i + 1; j < count; j++){
+					if (comp[i].init_lia, comp[j].init_lia){
+						swapCcompany(comp[i], comp[j]);
+					}
+				}
+			}
+		default:
+			break;
+		}
+
+	}
+	void ledger(Ccompany comp[STRMAX], int count){
+		sortLedger(comp, count);
+		cout << "===============================" << endl;
+		cout << "name" << "\t" << "ASSET" << "\t" << "LIABILITY" << "\t" << "REVENUE" << "\t" << "EXPENSE" << endl;
+		for (int i = 0; i <= count; i++){
+			cout << comp[i].name << "\t" << comp[i].init_ast + comp[i].pdt_total << "\t" << comp[i].init_lia + comp[i].emp_total + comp[i].mtl_total << "\t" << comp[i].pdt_total << "\t" << comp[i].emp_total + comp[i].mtl_total;
+		}
+		cout <<endl<< "===============================" << endl;
+	}
+};
+
+class Cfileio{
+public:
+	void fileinput(Ccompany comp[STRMAX], int count){
+		FILE* fp;
+		char* str = new char[STRMAX];
+		str = "../company.txt";
+		fp = fopen(str, "w");
+		//exception
+		if (fp == NULL)
+		{
+			fprintf(stderr, "打不開檔案啦!\n");
+			exit(1);
+		}
+		//write company
+		for (int i = 0; i <= count; i++){
+			fprintf(fp, "%s\t%ld\t%ld\n", comp[i].name, comp[i].init_ast, comp[i].init_lia); //公司
+		}
+		fclose(fp);
+		delete fp;
+
+		//write product
+		for (int i = 0; i <= count; i++){
+			FILE* fp;
+			char* num = new char[STRMAX];
+			strcpy(str, "../product");
+			_itoa(i, num, 10);
+			strcat(str, num);
+			strcat(str, ".txt");
+			fp = fopen(str, "w");
+			//exception
+			if (fp == NULL)
+			{
+				fprintf(stderr, "打不開檔案啦!\n");
+				exit(1);
+			}
+			for (int j = 0; j < comp[i].countPdt; j++){
+				fprintf(fp, "%s\t%ld\t%ld\t%s\n", comp[i].pdt_name + j, *(comp[i].pdt_num + j), *(comp[i].pdt_price + j), comp[i].pdt_date + j); //產品
+			}
+			fclose(fp);
+			delete fp;
+		}
+		//write need
+		for (int i = 0; i <= count; i++){
+			FILE* fp;
+			char* num = new char[STRMAX];
+			strcpy(str, "../need");
+			_itoa(i, num, 10);
+			strcat(str, num);
+			strcat(str, ".txt");
+			fp = fopen(str, "w");
+			//exception
+			if (fp == NULL)
+			{
+				fprintf(stderr, "打不開檔案啦!\n");
+				exit(1);
+			}
+			for (int j = 0; j < comp[i].countPdt; j++){
+				for (int k = 0; k < ARRAY_SIZE(*comp[i].pdt_need+j); k++){
+					fprintf(fp, "%s\t", *(comp[i].pdt_need + j)+k); //該產品所需原料
+				}
+				fprintf(fp, "\n");
+			}
+			fclose(fp);
+			delete fp;
+		}
+		//write material
+		for (int i = 0; i <= count; i++){
+			FILE* fp;
+			char* num = new char[STRMAX];
+			strcpy(str, "../material");
+			_itoa(i, num, 10);
+			strcat(str, num);
+			strcat(str, ".txt");
+			fp = fopen(str, "w");
+			//exception
+			if (fp == NULL)
+			{
+				fprintf(stderr, "打不開檔案啦!\n");
+				exit(1);
+			}
+			for (int l = 0; l < comp[i].countMtl; l++)
+			{
+				fprintf(fp, "%s\t%ld\t%ld\t%s\n", comp[i].mtl_name + l, *(comp[i].mtl_num + l), *(comp[i].mtl_price + l), comp[i].mtl_date + l); //原料
+			}
+			fclose(fp);
+			delete fp;
+		}
+		//write employee
+		for (int i = 0; i <= count; i++){
+			FILE* fp;
+			char* num = new char[STRMAX];
+			strcpy(str, "../employee");
+			_itoa(i, num, 10);
+			strcat(str, num);
+			strcat(str, ".txt");
+			fp = fopen(str, "w");
+			//exception
+			if (fp == NULL)
+			{
+				fprintf(stderr, "打不開檔案啦!\n");
+				exit(1);
+			}
+			for (int a = 0; a < comp[i].countEmp; a++){
+				fprintf(fp, "%s\t%ld\t%ld\t%s\n", comp[i].emp_name+a, *(comp[i].emp_sal+a), comp[i].emp_date+a); //員工
+			}
+			fclose(fp);
+			delete fp;
+		}
+		//write customer
+		for (int i = 0; i <= count; i++){
+			FILE* fp;
+			char* num = new char[STRMAX];
+			strcpy(str, "../customer");
+			_itoa(i, num, 10);
+			strcat(str, num);
+			strcat(str, ".txt");
+			fp = fopen(str, "r");
+			//exception
+			if (fp == NULL)
+			{
+				fprintf(stderr, "打不開檔案啦!\n");
+				exit(1);
+			}
+			for (int b = 0; b <= comp[i].order.cust_num; b++){
+				fprintf(fp, "%s\t%s\t%s\t\n", comp[i].order.cust_name+b, comp[i].order.location+b, comp[i].order.expectedDate+b); //顧客
+			}
+			fclose(fp);
+			delete fp;
+		}
+		//write order
+		for (int i = 0; i <= count; i++){
+			FILE* fp;
+			char* num = new char[STRMAX];
+			int j = 0;
+			char* cust_id = new char[STRMAX];
+			
+			strcpy(str, "../order");
+			_itoa(i, num, 10);
+			strcat(str, num);
+			
+			//exception
+			if (fp == NULL)
+			{
+				fprintf(stderr, "打不開檔案啦!\n");
+				exit(1);
+			}
+			for (j = 0; j <= comp[i].order.cust_num; j++){
+				_itoa(j, cust_id, 10);
+				strcat(str, cust_id);
+				strcat(str, ".txt");
+				fp = fopen(str, "w");
+				for (int b = 0; b <= comp[i].order.countOrder; b++){
+					fprintf(fp, "%s\t%ld\t%ld\n", *(comp[i].order.order_name + j)+b, *(*(comp[i].order.order_num+j)+ b), *(*(comp[i].order.order_price+j)+ b)); //該顧客所訂的產品
+				}
+				delete cust_id;
+			}
+			fclose(fp);
+			delete fp;
+			delete num;
+			
+		}
+	}
+	void fileread(Ccompany comp[STRMAX]){
+		FILE* fp;
+		char* str = new char[STRMAX];
+		int num = 0;
+		char* number = new char[STRMAX];
+		int choice=0;
+		int i=0;
+		cout << "正在讀進公司" << endl;
+		str = "../company.txt";
+		while (!feof(fp)){
+			fscanf(fp, "%s%ld%ld", comp[i].name, comp[i].init_ast, comp[i].init_lia);
+			i++;
+		}
+		fclose(fp);
+		delete fp;
+
+		cout << "請問你要讀第幾間公司? " << endl;
+		cin >> num;
+		_itoa(num, number, 10);
+		cout << "====================" << endl;
+		cout << "1 讀進產品" << endl;
+		cout << "2 讀進材料" << endl;
+		cout << "3 讀進員工" << endl;
+		cout << "4 讀進客戶" << endl;
+		cout << "5 讀進訂單" << endl;
+
+		cout << "====================" << endl;
+		cout << "請問你要讀什麼? " << endl;
+		fflush(stdin);
+		cin >> choice;
+		FILE* fp;
+		switch (choice)
+		{
+		case 1:
+			strcpy(str, "../product");
+			strcat(str, number);
+			strcat(str, ".txt");
+			fopen(str, "r");
+			while (!feof(fp)){
+				int j = 0;
+				fscanf(fp, "%s%ld%ld%s", comp[num].pdt_name + j, *(comp[num].pdt_num + j), *(comp[num].pdt_price + j), comp[num].pdt_date + j);
+				j++;
+			}
+			break;
+		case 2:
+			strcpy(str, "../material");
+			strcat(str, number);
+			strcat(str, ".txt");
+			fopen(str, "r");
+			while (!feof(fp)){
+				int j = 0;
+				fscanf(fp, "%s%ld%ld%s", comp[num].mtl_name + j, *(comp[num].mtl_num + j), *(comp[num].mtl_price + j), comp[num].mtl_date + j);
+				j++;
+			}
+			break;
+		case 3:
+			strcpy(str, "../employee");
+			strcat(str, number);
+			strcat(str, ".txt");
+			fopen(str, "r");
+			while (!feof(fp)){
+				int j = 0;
+				fscanf(fp, "%s%ld%ld%s", comp[i].emp_name + j, *(comp[i].emp_sal) + j, comp[i].emp_date + j);
+				j++;
+			}
+			break;
+		case 4:
+			strcpy(str, "../customer");
+			strcat(str, number);
+			strcat(str, ".txt");
+			fopen(str, "r");
+			while (!feof(fp)){
+				int b = 0;
+				fscanf(fp, "%s%s%s", comp[i].order.cust_name + b, comp[i].order.location + b, comp[i].order.expectedDate + b);
+				b++;
+			}
+			break;
+		case 5:
+			int j = 0;
+			char* cust_id = new char[STRMAX];
+			cout << "請輸入顧客編號: " << endl;
+			cin >> j;
+			_itoa(j, cust_id, 10);
+			strcpy(str, "../order");
+			strcat(str, number);
+			strcat(str, cust_id);
+			strcat(str, ".txt");
+			fopen(str, "r");
+			while (!feof(fp)){
+				int b = 0;
+				fscanf(fp, "%s%ld%ld", (*(comp[num].order.order_name+j) + b), *(*(comp[num].order.order_num+j) + b), *(*(comp[num].order.order_price+j) + b));
+				b++;
+			}
+			delete cust_id;
+		default:
+			break;
+		}
+			fclose(fp);
+			delete fp;
+	}
+		
+};
+
+
+
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	bool cont = true;
+	bool keep = true;
+	int tmp(0);
+	int count = 0;
+	CInformation func = CInformation();
+	Cfileio fio = Cfileio();
+	Cledger led = Cledger();
+	Ccompany comp[STRMAX] = {};
+	
+	
+	
+	//while 建立公司物件
+	while (keep)
+	{
+		cout << "= *= *= *= *= *= *= *= *= *= *= *= *= *= *= *= *= *=" << endl;
+		cout << "Welcome to Accounting System!" << endl << "= *= *= *= *= *= *= *= *= *= *= *= *= *= *= *= *= *=" << endl;
+		cout << "新增一間公司" << "------------------------------" << endl;
+		comp[count].inputCompInfo();
+		while (cont){
+			cout << "0 結束" << endl;
+			cout << "1 新增產品" << endl;
+			cout << "2 新增材料" << endl;
+			cout << "3 新增員工" << endl;
+			cout << "4 新增訂單" << endl;
+			cout << "5 查詢總帳" << endl;
+			cout << "6 查詢庫存" << endl;
+			cout << "7 查詢訂單" << endl;
+			cout << "8 查詢顧客" << endl;
+			cout << "9 查詢員工" << endl;
+			cout << "10 寫入檔案" << endl;
+			cout << "11 讀取檔案" << endl;
+			cout << "------------------------------" << endl;
+			cout << "請問您要做什麼動作? ";
+			cin >> tmp;
+			switch (tmp)
+			{
+			case 1:
+				comp[count].inputPdtInfo();
+				break;
+			case 2:
+				comp[count].inputMtlInfo();
+				break;
+			case 3:
+				comp[count].inputEmpInfo();
+				break;
+			case 4:
+				comp[count].inputOrderInfo();
+				break;
+			case 5:
+				led.ledger(comp, count);
+				break;
+			case 6:
+				comp[count].info.showInventory(comp[count].countPdt, comp[count].pdt_name, comp[count].pdt_num, comp[count].countMtl, comp[count].mtl_name, comp[count].mtl_num);
+				break;
+			case 7:
+				comp[count].order.showOrder(comp[count].order.cust_num, comp[count].order.countOrder, comp[count].order.cust_name, comp[count].order.order_name, comp[count].order.order_num);
+				break;
+			case 8:
+				comp[count].order.showCustomer(comp[count].order.cust_name, comp[count].order.cust_num, comp[count].order.location);
+				break;
+			case 9:
+				comp[count].showEmployee(comp[count].countEmp, comp[count].emp_name, comp[count].emp_sal, comp[count].emp_date);
+				break;
+			case 10:
+				fio.fileinput(comp, count);
+			case 11:
+				fio.fileread(comp);
+			case 0:
+				cont = false;
+			default:
+				break;
+			}
+		}
+		cout << "請問您要新增下一個公司嗎?(1/0) ";
+		cin >> keep;
+		if (keep)
+			count++;
+	}	
+	return 0;
+}
 
 
 

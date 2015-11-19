@@ -103,7 +103,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		fscanf(fp, "%s%s", var, var);
 		fscanf(fp, "%s%s%s%ld%s%ld", var, name+(*comp_num), var, &(*init_ast), var, &(*init_lia));
 		fscanf(fp, "%d", &(*countPdt));
-
+		
 		for (*i = 0; *i < *countPdt;(*i)++)
 		{
 			fscanf(fp, "%s%s%s%ld%s%ld", var, (pdt_name+(*i)), var, &(*(pdt_num +(*i))), var, &(*(pdt_price+(*i))));

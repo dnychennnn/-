@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6B5A22AC-F020-4CB7-B3AC-D46A7C3AC885}</ProjectGuid>
+    <ProjectGuid>{0D737054-7D8A-4500-B14A-15DAA3C3C275}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>視窗程式設計第4次作業_4102056034_陳勇瑜</RootNamespace>
   </PropertyGroup>
