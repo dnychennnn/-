@@ -163,7 +163,7 @@ public:
 		cout << "請問您想怎麼排列訂單?: ";
 		cin >> choice;
 		switch (choice){
-		case1:
+		case 1:
 			//sorted by customer's name
 			for (int i = 0; i < cust_num; i++){
 				for (int j = i + 1; j < cust_num; j++){
@@ -314,6 +314,7 @@ public:
 				}
 			}
 		}
+
 	}
 	void showInventory(int countPdt, char* pdt_name, long* pdt_num, int countMtl, char* mtl_name, long* mtl_num){
 		sortPdt(pdt_name, pdt_num);
@@ -334,7 +335,7 @@ public:
 		for (int i = 0; i < countMtl; i++){
 			cout << mtl_name + i << "\t" << *(mtl_num + i) << endl;
 		}
-		//計算剩餘的原料可做多少product
+		
 	}
 };
 class Corder{
@@ -376,7 +377,6 @@ public:
 	}
 
 };
-
 class Ccompany{
 public:
 	//basic info
@@ -419,7 +419,7 @@ public:
 		cout << "Add a company" << endl;
 		cout << "<Basic Information>" << endl;
 		cout << "company name: ";
-		cin.getline(name  , STRMAX);
+		cin.getline(name, STRMAX);
 		cout << "initial assets: ";
 		cin >> init_ast;
 		cout << "initial liabilities: ";
@@ -503,7 +503,7 @@ public:
 			cout << "customer's name: ";
 			cin.getline(order.cust_name + order.cust_num, STRMAX);
 			cout << "location(ie: 402台中市南區國光路250號): ";
-			cin >> order.location;
+			cin.getline(order.location+order.cust_num, STRMAX);
 			cout << "expected date(ie: 2015/12/26): " << endl;
 			cin >> (order.expectedDate + order.cust_num);
 			cout << "How many orders?: ";
@@ -511,7 +511,7 @@ public:
 			for (int j = 0; j < order.countOrder; j++)
 			{
 				cout << "product name: " << endl;
-				cin >> *(order.order_name + order.cust_num) + j;
+				cin.getline(*(order.order_name + order.cust_num) + j, STRMAX);
 				cout << "product number: " << endl;
 				cin >> *(*(order.order_num + order.cust_num) + j);
 				cout << "product price: " << endl;
@@ -541,9 +541,102 @@ public:
 		cout << "=====================================" << endl;
 
 	}
+	void modify(){
+		cout << "      MODIFY     " << endl;
+		cout << "=================" << endl;
+		cout << "1 公司" << endl;
+		cout << "2 產品" << endl;
+		cout << "3 材料" << endl;
+		cout << "4 員工" << endl;
+		cout << "5 顧客" << endl;
+		cout << "6 訂單" << endl;
+		cout << "=================" << endl;
+		int choice=0;
+		int j = 0;
+		int k = 0;
+		switch (choice)
+		{
+		case 1:
+			cout << "公司名: ";
+			cin.getline(name, STRMAX);
+			cout << "初始資產: ";
+			cin >> init_ast;
+			cout << "初始負債: ";
+			cin >> init_lia;
+			break;
+		case 2:
+			for (int i = 0; i <= countPdt; i++){
+				cout << i << " " << pdt_name+i << endl;
+			}
+			cout << "請輸入您要修改的產品編號: ";
+			cin >> j;
+			cout << "產品名: ";
+			cin.getline((pdt_name + j), STRMAX);
+			cout << "產品數: ";
+			cin >> *(pdt_num + j);
+			cout << "產品單價: ";
+			break;
+		case 3:
+			
+			for (int i = 0; i <= countMtl; i++){
+				cout << i << " " << mtl_name+i << endl;
+			}
+			cout << "請輸入您要修改的材料編號: ";
+			cin >> j;
+			cout << "材料名: ";
+			cin >> mtl_name + j;
+			cout << "材料數: ";
+			cin >> *(mtl_num + j);
+			cout << "材料單價: ";
+			cin >> *(mtl_price + j);
+			cout << "日期(ie: 2015/12/26): " << endl;
+			cin >> mtl_date + j;
+			break;
+		case 4:
+			
+			for (int i = 0; i <= countEmp; i++){
+				cout << i << " " << emp_name+i << endl;
+			}
+			cout << "請輸入您要修改的員工編號: ";
+			cin >> j;
+			cout << "員工名: ";
+			cin.getline((emp_name)+j, STRMAX);
+			cout << "員工薪水: ";
+			cin >> *(emp_sal + j);
+			cout << "日期(ie: 2015/12/26): ";
+			cin >> emp_date + j;
+			break;
+		case 5:
+			
+			for (int i = 0; i <= order.cust_num; i++){
+				cout << i << " " << order.cust_name + i << endl;
+			}
+			cout << "請輸入您要修改的顧客編號: ";
+			cin >> j;
+			cout << "顧客名: ";
+			cin.getline(order.cust_name + j, STRMAX);
+			cout << "地址(ie: 402台中市南區國光路250號): ";
+			cin.getline(order.location + j, STRMAX);
+			cout << "取貨日期(ie: 2015/12/26): " << endl;
+			cin.getline((order.expectedDate + j), STRMAX);
+			break;
+		case 6:
+			cout << "請輸入您要修改的顧客編號: ";
+			cin >> j;
+			cout << "請輸入您要修改的訂單編號: ";
+			cin >> k;
+			cout << "產品名: " << endl;
+			cin.getline(*(order.order_name + j) + k, STRMAX);
+			cout << "product number: " << endl;
+			cin >> *(*(order.order_num + j) + k);
+			cout << "product price: " << endl;
+			cin >> *(*(order.order_price + j) + k);
+			break;
+		}
+	}
 };
-
 class Cledger{
+
 public:
 	void swapCcompany(Ccompany comp1, Ccompany comp2){
 		Ccompany temp = Ccompany();
@@ -600,11 +693,11 @@ public:
 		cout <<endl<< "===============================" << endl;
 	}
 };
-
 class Cfileio{
 public:
+	FILE* fp;
 	void fileinput(Ccompany comp[STRMAX], int count){
-		FILE* fp;
+		
 		char* str = new char[STRMAX];
 		str = "../company.txt";
 		fp = fopen(str, "w");
@@ -623,7 +716,6 @@ public:
 
 		//write product
 		for (int i = 0; i <= count; i++){
-			FILE* fp;
 			char* num = new char[STRMAX];
 			strcpy(str, "../product");
 			_itoa(i, num, 10);
@@ -644,7 +736,6 @@ public:
 		}
 		//write need
 		for (int i = 0; i <= count; i++){
-			FILE* fp;
 			char* num = new char[STRMAX];
 			strcpy(str, "../need");
 			_itoa(i, num, 10);
@@ -668,7 +759,6 @@ public:
 		}
 		//write material
 		for (int i = 0; i <= count; i++){
-			FILE* fp;
 			char* num = new char[STRMAX];
 			strcpy(str, "../material");
 			_itoa(i, num, 10);
@@ -690,7 +780,7 @@ public:
 		}
 		//write employee
 		for (int i = 0; i <= count; i++){
-			FILE* fp;
+			
 			char* num = new char[STRMAX];
 			strcpy(str, "../employee");
 			_itoa(i, num, 10);
@@ -711,7 +801,7 @@ public:
 		}
 		//write customer
 		for (int i = 0; i <= count; i++){
-			FILE* fp;
+			
 			char* num = new char[STRMAX];
 			strcpy(str, "../customer");
 			_itoa(i, num, 10);
@@ -732,7 +822,6 @@ public:
 		}
 		//write order
 		for (int i = 0; i <= count; i++){
-			FILE* fp;
 			char* num = new char[STRMAX];
 			int j = 0;
 			char* cust_id = new char[STRMAX];
@@ -764,7 +853,7 @@ public:
 		}
 	}
 	void fileread(Ccompany comp[STRMAX]){
-		FILE* fp;
+		
 		char* str = new char[STRMAX];
 		int num = 0;
 		char* number = new char[STRMAX];
@@ -793,7 +882,9 @@ public:
 		cout << "請問你要讀什麼? " << endl;
 		fflush(stdin);
 		cin >> choice;
-		FILE* fp;
+		
+		int j = 0;
+		char* cust_id = new char[STRMAX];
 		switch (choice)
 		{
 		case 1:
@@ -841,8 +932,7 @@ public:
 			}
 			break;
 		case 5:
-			int j = 0;
-			char* cust_id = new char[STRMAX];
+			
 			cout << "請輸入顧客編號: " << endl;
 			cin >> j;
 			_itoa(j, cust_id, 10);
@@ -857,6 +947,7 @@ public:
 				b++;
 			}
 			delete cust_id;
+			break;
 		default:
 			break;
 		}
@@ -868,14 +959,13 @@ public:
 
 
 
-
-
 int _tmain(int argc, _TCHAR* argv[])
 {
 	bool cont = true;
 	bool keep = true;
 	int tmp(0);
 	int count = 0;
+	int j = 0;
 	CInformation func = CInformation();
 	Cfileio fio = Cfileio();
 	Cledger led = Cledger();
@@ -903,6 +993,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			cout << "9 查詢員工" << endl;
 			cout << "10 寫入檔案" << endl;
 			cout << "11 讀取檔案" << endl;
+			cout << "12 修改" << endl;
 			cout << "------------------------------" << endl;
 			cout << "請問您要做什麼動作? ";
 			cin >> tmp;
@@ -937,10 +1028,18 @@ int _tmain(int argc, _TCHAR* argv[])
 				break;
 			case 10:
 				fio.fileinput(comp, count);
+				break;
 			case 11:
 				fio.fileread(comp);
+				break;
+			case 12:
+				cout << "請輸入您要修改的公司編號: ";
+				cin >> j;
+				comp[j].modify();
+				break;
 			case 0:
 				cont = false;
+				break;
 			default:
 				break;
 			}
