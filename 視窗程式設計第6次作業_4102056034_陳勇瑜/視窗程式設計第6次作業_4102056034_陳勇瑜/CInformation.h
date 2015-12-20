@@ -47,14 +47,14 @@ class COrder
 public:
 	int countOrder;
 	CString cust_name[STRMAX];
-	int cust_num = 0;
+	int cust_num;
 	CString location[STRMAX];
 	CString order_name[STRMAX][10];
 	long order_num[STRMAX][10];
 	long order_price[STRMAX][10];
-	long order_total = 0;
+	long order_total;
 	CString expectedDate[STRMAX];
-	bool cont_order = true;
+	
 };
 
 class Ccompany

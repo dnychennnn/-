@@ -40,6 +40,9 @@ static int i; //index of company
 static int j; //index of product
 static int pn; //index of prodoct need
 static int k; //index of material
+static int e; //index of employee
+static int c; //index of customer
+static int o; //index of order
 
 
 extern C視窗程式設計第6次作業_4102056034_陳勇瑜App theApp;

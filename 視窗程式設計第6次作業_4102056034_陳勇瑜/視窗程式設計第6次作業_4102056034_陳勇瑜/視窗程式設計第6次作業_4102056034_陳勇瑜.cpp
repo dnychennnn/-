@@ -99,4 +99,3 @@ BOOL C視窗程式設計第6次作業_4102056034_陳勇瑜App::InitInstance()
 	// 而非提示開始應用程式的訊息。
 	return FALSE;
 }
-

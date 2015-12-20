@@ -61,6 +61,10 @@ void CtabMaterial::OnBnClickedOk()
 		UpdateData(FALSE);
 	}
 	k++;
+	GetDlgItem(IDC_matName)->SetWindowTextW(NULL);
+	GetDlgItem(IDC_matNum)->SetWindowTextW(NULL);
+	GetDlgItem(IDC_matPrice)->SetWindowTextW(NULL);
+	UpdateWindow(); // 更新對話框.
 }
 
 

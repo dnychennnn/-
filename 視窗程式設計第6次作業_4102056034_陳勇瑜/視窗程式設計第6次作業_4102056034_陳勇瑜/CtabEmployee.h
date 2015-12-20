@@ -18,4 +18,10 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ¤ä´©
 
 	DECLARE_MESSAGE_MAP()
+public:
+	CString empName;
+	CString empDate;
+	long empSalary;
+	afx_msg void OnBnClickedOk();
+	long empTotal;
 };
