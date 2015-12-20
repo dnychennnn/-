@@ -18,6 +18,7 @@ require: using classes
 #include "stdafx.h"
 #include "stdio.h"
 #include "iostream"
+#include "string.h"
 
 
 using namespace std;
@@ -53,7 +54,6 @@ public:
 		*long1 = *long2;
 		*long2 = temp;
 	}
-	
 	void sortBilling(int cust_num, char* cust_name, char** order_name, long** order_num){
 		int choice = 0;
 		cout << "1 依照名字" << endl << "2 依照購買數量" << endl;
@@ -299,7 +299,7 @@ public:
 
 	}
 	void inventory(int countPdt, char* pdt_name, long* pdt_num, char** pdt_need, int countOrder, char** order_name, long** order_num, int countMtl, char* mtl_name, long* mtl_num){
-
+		long min = 100000000000;
 		//每次input order就call一次 計算剩餘pdt
 		//每次input order就call一次 計算剩餘mtl
 		for (int i = 0; i < countOrder; i++){
@@ -308,13 +308,20 @@ public:
 					*(pdt_num + j) -= *(*order_num + i);
 					for (int k = 0; k < ARRAY_SIZE(*(pdt_need + j)); k++){
 						for (int l = 0; l < countMtl; l++){
-							*(mtl_num + l) -= 1;
+							*(mtl_num + l) -= 1; //消耗MATERIAL
+							//判斷倉庫可做多少產品
+							if (strcmp(*(pdt_need + j), mtl_name + l)){
+								if (*(mtl_num + l) < min)
+									min = *(mtl_num + l);
+							}
+
 						}
+						cout << "倉庫還有: " << min << "個" << pdt_name + j;
 					}
 				}
 			}
 		}
-
+		
 	}
 	void showInventory(int countPdt, char* pdt_name, long* pdt_num, int countMtl, char* mtl_name, long* mtl_num){
 		sortPdt(pdt_name, pdt_num);
@@ -342,12 +349,12 @@ class Corder{
 public:
 	int countOrder;
 	char* cust_name = new char[STRMAX];
-	int cust_num;
+	int cust_num = 0;
 	char* location = new char[STRMAX];
 	char** order_name = new char*[STRMAX];
 	long** order_num = new long*(0);
 	long** order_price = new long*(0);
-	long order_total;
+	long order_total =0;
 	char* expectedDate = new char[STRMAX];
 	bool cont_order = true;
 	CInformation info = CInformation();
@@ -430,7 +437,7 @@ public:
 		cin >> countPdt;
 		int j = 0;
 		int i = 0;
-		bool cont = false;
+		bool cont = true;
 		while (j < countPdt)
 		{
 			fflush(stdin);
@@ -442,16 +449,19 @@ public:
 			cin >> *(pdt_price + j);
 			//定義每項產品所需要的原料
 			while (cont){
-				cout << "此產品所需要的材料: " << endl;
-				cin >> (*(pdt_need + j) + i);
-				cout << "還要繼續輸入材料?(1/0): " << endl;
+				fflush(stdin);
+				cout << "此產品所需要的材料: ";
+				*(pdt_need + j) = new char[STRMAX];
+				cin.getline(*(pdt_need + j) + i, STRMAX);
+				cout << "還要繼續輸入材料?(1/0): ";
 				cin >> cont;
 				if (cont){
 					i++;
 				}
 			}
 			cout << "date(ie: 2015/12/26): ";
-			cin >> pdt_date + j ;
+			fflush(stdin);
+			cin.getline(pdt_date + j,STRMAX) ;
 			pdt_total += (*(pdt_price + j)) * (long)(*(pdt_num + j));
 			j++;
 
@@ -472,7 +482,8 @@ public:
 			cout << "employee's salary: ";
 			cin >> *(emp_sal + j);
 			cout << "date(ie: 2015/12/26): ";
-			cin >> emp_date + j ;
+			fflush(stdin);
+			cin.getline(emp_date + j,STRMAX );
 			cout << "----------------" << endl;
 			emp_total += *(emp_sal + j);
 		}
@@ -489,8 +500,9 @@ public:
 			cin >> *(mtl_num + j);
 			cout << "price: ";
 			cin >> *(mtl_price + j);
+			fflush(stdin);
 			cout << "date(ie: 2015/12/26): " << endl;
-			cin >> mtl_date + j;
+			cin.getline(mtl_date + j,STRMAX);
 			cout << "----------------" << endl;
 			mtl_total += (long)(*(mtl_num + j)) * (*(mtl_price + j));
 
@@ -501,20 +513,22 @@ public:
 		while (order.cont_order){
 			fflush(stdin);
 			cout << "customer's name: ";
-			cin.getline(order.cust_name + order.cust_num, STRMAX);
+			cin.getline((order.cust_name + order.cust_num), STRMAX);
 			cout << "location(ie: 402台中市南區國光路250號): ";
 			cin.getline(order.location+order.cust_num, STRMAX);
-			cout << "expected date(ie: 2015/12/26): " << endl;
-			cin >> (order.expectedDate + order.cust_num);
+			cout << "expected date(ie: 2015/12/26): ";
+			cin.getline( (order.expectedDate + order.cust_num), STRMAX );
 			cout << "How many orders?: ";
 			cin >> order.countOrder;
 			for (int j = 0; j < order.countOrder; j++)
 			{
-				cout << "product name: " << endl;
-				cin.getline(*(order.order_name + order.cust_num) + j, STRMAX);
-				cout << "product number: " << endl;
+				fflush(stdin);
+				cout << "product name: ";
+				*(order.order_name+order.cust_num) = new char[STRMAX];
+				cin.getline(*(order.order_name + order.cust_num) + j,STRMAX);
+				cout << "product number: ";
 				cin >> *(*(order.order_num + order.cust_num) + j);
-				cout << "product price: " << endl;
+				cout << "product price: ";
 				cin >> *(*(order.order_price + order.cust_num) + j);
 				cout << "----------------" << endl;
 				order.order_total = *(*(order.order_num + order.cust_num) + j)**(*(order.order_num + order.cust_num) + j);
@@ -699,7 +713,7 @@ public:
 	void fileinput(Ccompany comp[STRMAX], int count){
 		
 		char* str = new char[STRMAX];
-		str = "../company.txt";
+		strcpy(str, "../company.txt");
 		fp = fopen(str, "w");
 		//exception
 		if (fp == NULL)
@@ -712,7 +726,6 @@ public:
 			fprintf(fp, "%s\t%ld\t%ld\n", comp[i].name, comp[i].init_ast, comp[i].init_lia); //公司
 		}
 		fclose(fp);
-		delete fp;
 
 		//write product
 		for (int i = 0; i <= count; i++){
@@ -732,7 +745,6 @@ public:
 				fprintf(fp, "%s\t%ld\t%ld\t%s\n", comp[i].pdt_name + j, *(comp[i].pdt_num + j), *(comp[i].pdt_price + j), comp[i].pdt_date + j); //產品
 			}
 			fclose(fp);
-			delete fp;
 		}
 		//write need
 		for (int i = 0; i <= count; i++){
@@ -749,13 +761,12 @@ public:
 				exit(1);
 			}
 			for (int j = 0; j < comp[i].countPdt; j++){
-				for (int k = 0; k < ARRAY_SIZE(*comp[i].pdt_need+j); k++){
+				for (int k = 0; k < ARRAY_SIZE(comp[i].pdt_need+j); k++){
 					fprintf(fp, "%s\t", *(comp[i].pdt_need + j)+k); //該產品所需原料
 				}
 				fprintf(fp, "\n");
 			}
 			fclose(fp);
-			delete fp;
 		}
 		//write material
 		for (int i = 0; i <= count; i++){
@@ -776,7 +787,6 @@ public:
 				fprintf(fp, "%s\t%ld\t%ld\t%s\n", comp[i].mtl_name + l, *(comp[i].mtl_num + l), *(comp[i].mtl_price + l), comp[i].mtl_date + l); //原料
 			}
 			fclose(fp);
-			delete fp;
 		}
 		//write employee
 		for (int i = 0; i <= count; i++){
@@ -797,7 +807,6 @@ public:
 				fprintf(fp, "%s\t%ld\t%ld\t%s\n", comp[i].emp_name+a, *(comp[i].emp_sal+a), comp[i].emp_date+a); //員工
 			}
 			fclose(fp);
-			delete fp;
 		}
 		//write customer
 		for (int i = 0; i <= count; i++){
@@ -807,7 +816,7 @@ public:
 			_itoa(i, num, 10);
 			strcat(str, num);
 			strcat(str, ".txt");
-			fp = fopen(str, "r");
+			fp = fopen(str, "w");
 			//exception
 			if (fp == NULL)
 			{
@@ -818,7 +827,6 @@ public:
 				fprintf(fp, "%s\t%s\t%s\t\n", comp[i].order.cust_name+b, comp[i].order.location+b, comp[i].order.expectedDate+b); //顧客
 			}
 			fclose(fp);
-			delete fp;
 		}
 		//write order
 		for (int i = 0; i <= count; i++){
@@ -847,10 +855,10 @@ public:
 				delete cust_id;
 			}
 			fclose(fp);
-			delete fp;
 			delete num;
 			
 		}
+		
 	}
 	void fileread(Ccompany comp[STRMAX]){
 		
